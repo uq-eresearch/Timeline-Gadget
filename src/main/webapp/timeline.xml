@@ -18,7 +18,5 @@
      <link rel="stylesheet" type="text/css" href="./lore_timeline.css"/>
 	
      <script type="text/javascript" src="./init.js"></script>
-     
-     <div id="my-timeline"></div>
   ]]></Content>
 </Module>

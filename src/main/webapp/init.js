@@ -20,7 +20,7 @@ Ext.onReady(function(){
             }
         ],
 
-        html : "<div id=\"my-timeline-2\"></div>",
+        html : "<div id=\"my-timeline\"></div>",
         listeners : {
         	afterrender : function(c) {
         		createStoryJS({
@@ -28,7 +28,7 @@ Ext.onReady(function(){
         			width:		'798',
         			height:		'566',
         			source:		'../timeline/example_json.json',
-        			embed_id:	'my-timeline-2',
+        			embed_id:	'my-timeline',
         			debug:		true
         		});
         	}
