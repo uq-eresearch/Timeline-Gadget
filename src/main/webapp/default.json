@@ -1,0 +1,12 @@
+{
+    "timeline":  
+  	{
+        "headline":"Timeline of Events for X",
+        "type":"default",
+        "date": [{
+            "startDate":"2011,12,10",
+            "headline":"Headline Goes Here",
+            "text":"<p>Body text goes here, some HTML is OK</p>"
+        }]
+    }
+}
