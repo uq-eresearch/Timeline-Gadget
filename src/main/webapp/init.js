@@ -130,13 +130,12 @@ Ext.onReady(function(){
 										 }
 										 dataRec += ']}}';
 										 
-										 createStoryJS({
-							        			type:		'timeline',
-							        			width:		'798',
-							        			height:		'566',
-							        			source:		jQuery.parseJSON(dataRec),
-							        			embed_id:	'my-timeline'
-							        	 });
+
+										 $("#timeline-frame")[0].onload = function() {
+											 $("#timeline-frame")[0].contentWindow
+										 		.postMessage(dataRec, '*');
+										 }
+										 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
 									 }
 								 }
 								 reader.readAsText(result.target.files[0]);
@@ -222,13 +221,11 @@ Ext.onReady(function(){
 										 }
 										 dataRec += ']}}';
 										 
-										 createStoryJS({
-							        			type:		'timeline',
-							        			width:		'798',
-							        			height:		'566',
-							        			source:		jQuery.parseJSON(dataRec),
-							        			embed_id:	'my-timeline'
-							        	 });
+										 $("#timeline-frame")[0].onload = function() {
+											 $("#timeline-frame")[0].contentWindow
+										 		.postMessage(dataRec, '*');
+										 }
+										 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
 									 }
 								 }
 								 reader.readAsText(result.target.files[0]);
@@ -242,14 +239,11 @@ Ext.onReady(function(){
 	                    	$('#myInput')[0].onchange = function(result) {													 
 								 var reader = new FileReader();
 								 reader.onload = function(e) {
-									 var data = jQuery.parseJSON(e.target.result);
-									 createStoryJS({
-						        			type:		'timeline',
-						        			width:		'798',
-						        			height:		'566',
-						        			source:		data,
-						        			embed_id:	'my-timeline'
-						        	 });
+									 $("#timeline-frame")[0].onload = function() {
+										 $("#timeline-frame")[0].contentWindow
+									 		.postMessage(e.target.result, '*');
+									 }
+									 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
 								 }
 								 reader.readAsText(result.target.files[0]);
 					        }
@@ -259,8 +253,8 @@ Ext.onReady(function(){
                 ]
             }
         ],
-
-        html : "<div id='my-timeline' style='width: 798px; height: 566px;'></div>",
+        html : "<iframe id='timeline-frame' src='http://localhost:8080/timeline/timeline.html' " +
+        		"style='width: 794px; height: 562px;'></div>",
         renderTo: Ext.get("timelinearea")
     });
 });
