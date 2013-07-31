@@ -122,7 +122,8 @@ Ext.onReady(function(){
 												 dataRec += '"endDate":"' + end_date_str + '",';
 											 }
 											 dataRec += '"headline":"' + rec.name + '",'
-											 dataRec += '"text":"' + rec.uri + '"}';
+											 dataRec += '"text":"' + rec.uri + '",';
+											 dataRec += '"asset":{"media":"' + rec.uri + '"}}';
 											 
 											 if (i < (recordData.length - 1)) {
 												 dataRec += ',';
@@ -213,7 +214,8 @@ Ext.onReady(function(){
 												 dataRec += '"endDate":"' + end_date_str + '",';
 											 }
 											 dataRec += '"headline":"' + rec.name + '",'
-											 dataRec += '"text":"' + rec.uri + '"}';
+											 dataRec += '"text":"' + rec.uri + '",';
+											 dataRec += '"asset":{"media":"' + rec.uri + '"}}';
 											 
 											 if (i < (recordData.length - 1)) {
 												 dataRec += ',';
@@ -253,6 +255,17 @@ Ext.onReady(function(){
                 ]
             }
         ],
+        listeners : {
+        	afterrender : function(c) {
+        		$.getJSON("http://localhost:8080/timeline/data.json", function(data) {
+            		$("#timeline-frame")[0].onload = function() {
+            			$("#timeline-frame")[0].contentWindow
+    						.postMessage(JSON.stringify(data), '*');
+    				}
+    				$("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+        		});
+        	}
+        },
         html : "<iframe id='timeline-frame' src='http://localhost:8080/timeline/timeline.html' " +
         		"style='width: 794px; height: 562px;'></div>",
         renderTo: Ext.get("timelinearea")

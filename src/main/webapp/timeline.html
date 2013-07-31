@@ -13,12 +13,10 @@
   <body>
     <div id="timeline-embed"></div>
     <script type="text/javascript">
-    	console.log("Yoman5");
     	window.addEventListener('message',function(e) {
         	var JSONdata = e.data;
         	JSONdata = jQuery.parseJSON(JSONdata);
-        	
-        	if (JSONdata.event === undefined) {
+        	if (JSONdata != null && JSONdata.event === undefined) {
 	        	createStoryJS({
 	    			type:		'timeline',
 	    			width:		'794',
