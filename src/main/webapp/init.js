@@ -37,204 +37,210 @@ Ext.onReady(function(){
             {
                 text: 'Import Menu',
                 menu: [
-                    new Ext.Action({
-					    text: 'Import from LORE RDF/XML',
-					    handler: function(){
-					    	$('#myInput')[0].onchange = function(result) {													 
-								 var reader = new FileReader();
-								 var recordData = [];
+					{
+						text: 'Import from LORE',
+						menu: [
+						       new Ext.Action({
+						    	   text: 'Import RDF/XML',
+						    	   handler: function(){
+						    		   $('#myInput')[0].onchange = function(result) {													 
+						    			   var reader = new FileReader();
+						    			   var recordData = [];
 								 
-								 reader.onload = function(e) {	 
-									 var data = e.target.result;
-									 var doc = new DOMParser().parseFromString(data, "text/xml");
+						    			   reader.onload = function(e) {	 
+						    				   var data = e.target.result;
+						    				   var doc = new DOMParser().parseFromString(data, "text/xml");
 									 
-									 var databank = jQuery.rdf.databank();
-							         for (ns in NAMESPACES) {
-							             databank.prefix(ns, NAMESPACES[ns]);
-							         }
-							         databank.load(doc);
-							         var loadedRDF = jQuery.rdf({
-							        	 databank : databank
-							         });
+						    				   var databank = jQuery.rdf.databank();
+						    				   for (ns in NAMESPACES) {
+						    					   databank.prefix(ns, NAMESPACES[ns]);
+						    				   }
+						    				   databank.load(doc);
+						    				   var loadedRDF = jQuery.rdf({
+						    					   databank : databank
+						    				   });
 							         
-							         var remQuery = loadedRDF.where('?url dc:title ?title')
-							         	.optional('?url dc:date-begin ?startDate')
-							         	.optional('?url dc:date-end ?endDate');
+						    				   var remQuery = loadedRDF.where('?url dc:title ?title')
+						    				   		.optional('?url dc:date-begin ?startDate')
+						    				   		.optional('?url dc:date-end ?endDate');
 							         							         
-							         for (var i = 0; i < remQuery.length; i++) {
-								         var res = remQuery.get(i);
+						    				   for (var i = 0; i < remQuery.length; i++) {
+						    					   var res = remQuery.get(i);
 								         
-								         var json_object = {
-												 name : res.title.value.toString(),
-												 uri : res.url.value.toString()};
-										 if (!(res.startDate === undefined)) {
-											 json_object["startDate"] = res.startDate.value;
-										 }
-										 if (!(res.endDate === undefined)) {
-											 json_object["endDate"] = res.endDate.value;
-										 }
-										 if (!((res.startDate === undefined) &&
-												 res.endDate === undefined)) {
-											 recordData.push(json_object);
-										 }
-							         }
+						    					   var json_object = {
+						    							   name : res.title.value.toString(),
+						    							   uri : res.url.value.toString()};
+						    					   if (!(res.startDate === undefined)) {
+						    						   json_object["startDate"] = res.startDate.value;
+						    					   }
+						    					   if (!(res.endDate === undefined)) {
+						    						   json_object["endDate"] = res.endDate.value;
+						    					   }
+						    					   if (!((res.startDate === undefined) &&
+						    							   res.endDate === undefined)) {
+						    						   recordData.push(json_object);
+						    					   }
+						    				   }
 							         
-							         if (recordData.length > 0) {
-										 var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
+						    				   if (recordData.length > 0) {
+						    					   var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
 
-										 for (var i = 0; i < recordData.length; i++) {
-											 var rec = recordData[i];
-											 var start_date_str = null;
-											 var end_date_str = null;
+						    					   for (var i = 0; i < recordData.length; i++) {
+						    						   var rec = recordData[i];
+						    						   var start_date_str = null;
+						    						   var end_date_str = null;
 																					 
-											 if (rec.startDate) {
-												 var start_date = new Date(rec.startDate);
-												 var start_day = start_date.getDate();
-												 if (start_day < 10) {
-													 start_day = "0" + start_day;
-												 }
-												 var start_month = start_date.getMonth() + 1;
-												 if (start_month < 10) {
-													 start_month = "0" + start_month;
-												 }
-												 var start_year = start_date.getFullYear();
+						    						   if (rec.startDate) {
+						    							   var start_date = new Date(rec.startDate);
+						    							   var start_day = start_date.getDate();
+						    							   if (start_day < 10) {
+						    								   start_day = "0" + start_day;
+						    							   }
+						    							   var start_month = start_date.getMonth() + 1;
+						    							   if (start_month < 10) {
+						    								   start_month = "0" + start_month;
+						    							   }
+						    							   var start_year = start_date.getFullYear();
 												 
-												 start_date_str = start_year + "," + start_month + "," + start_day;
-											 }
+						    							   start_date_str = start_year + "," + start_month + "," + start_day;
+						    						   }
 											 
-											 if (rec.endDate) {
-												 var end_date = new Date(rec.endDate);
-												 var end_day = end_date.getDate();
-												 if (end_day < 10) {
-													 end_day = "0" + end_day;
-												 }
-												 var end_month = end_date.getMonth() + 1;
-												 if (end_month < 10) {
-													 end_month = "0" + end_month;
-												 }
-												 var end_year = end_date.getFullYear();
+						    						   if (rec.endDate) {
+						    							   var end_date = new Date(rec.endDate);
+						    							   var end_day = end_date.getDate();
+						    							   if (end_day < 10) {
+						    								   end_day = "0" + end_day;
+						    							   }
+						    							   var end_month = end_date.getMonth() + 1;
+						    							   if (end_month < 10) {
+						    								   end_month = "0" + end_month;
+						    							   }
+						    							   var end_year = end_date.getFullYear();
 												 
-												 end_date_str = end_year + "," + end_month + "," + end_day;
-											 }
+						    							   end_date_str = end_year + "," + end_month + "," + end_day;
+						    						   }
 											 
-											 dataRec += '{"startDate":"' + start_date_str + '",';
-											 if (end_date_str) {
-												 dataRec += '"endDate":"' + end_date_str + '",';
-											 }
-											 dataRec += '"headline":"' + rec.name + '",'
-											 dataRec += '"text":"' + rec.uri + '",';
-											 dataRec += '"asset":{"media":"' + rec.uri + '"}}';
+						    						   dataRec += '{"startDate":"' + start_date_str + '",';
+						    						   if (end_date_str) {
+						    							   dataRec += '"endDate":"' + end_date_str + '",';
+						    						   }
+						    						   dataRec += '"headline":"' + rec.name + '",'
+						    						   dataRec += '"text":"' + rec.uri + '",';
+						    						   dataRec += '"asset":{"media":"' + rec.uri + '"}}';
 											 
-											 if (i < (recordData.length - 1)) {
-												 dataRec += ',';
-											 }
-										 }
-										 dataRec += ']}}';
+						    						   if (i < (recordData.length - 1)) {
+						    							   dataRec += ',';
+						    						   }
+						    					   }
+						    					   dataRec += ']}}';
 										 
 
-										 $("#timeline-frame")[0].onload = function() {
-											 $("#timeline-frame")[0].contentWindow
-										 		.postMessage(dataRec, '*');
-										 }
-										 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
-									 }
-								 }
-								 reader.readAsText(result.target.files[0]);
-					        }
-							$('#myInput').click();
-					    }
-					}), 
-					new Ext.Action({
-	                    text: 'Import From LORE JSON',
-	                    handler: function(){
-	                    	$('#myInput')[0].onchange = function(result) {													 
-								 var reader = new FileReader();
-								 reader.onload = function(e) {
-									 var data = jQuery.parseJSON(e.target.result);
-									 var recordData = [];
+						    					   $("#timeline-frame")[0].onload = function() {
+						    						   $("#timeline-frame")[0].contentWindow
+						    						   		.postMessage(dataRec, '*');
+						    					   }
+						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+						    				   }
+						    			   }
+						    			   reader.readAsText(result.target.files[0]);
+						    		   }
+						    		   $('#myInput').click();
+						    	   }
+						       }), 
+						       new Ext.Action({
+						    	   text: 'Import JSON',
+						    	   handler: function(){
+						    		   $('#myInput')[0].onchange = function(result) {													 
+						    			   var reader = new FileReader();
+						    			   reader.onload = function(e) {
+						    				   var data = jQuery.parseJSON(e.target.result);
+						    				   var recordData = [];
 									 
-									 for (var recordID in data) {
-										 var record = data[recordID];
+						    				   for (var recordID in data) {
+						    					   var record = data[recordID];
 										 
-										 if (record["http://purl.org/dc/elements/1.1/date-begin"] ||
-												 record["http://purl.org/dc/elements/1.1/date-end"]) {				
-											 var json_object = {
-													 name : record["http://purl.org/dc/elements/1.1/title"][0].value,
-													 uri : recordID};
-											 if (record["http://purl.org/dc/elements/1.1/date-begin"]) {
-												 json_object["startDate"] = record["http://purl.org/dc/elements/1.1/date-begin"][0].value;
-											 }
-											 if (record["http://purl.org/dc/elements/1.1/date-end"]) {
-												 json_object["endDate"] = record["http://purl.org/dc/elements/1.1/date-end"][0].value;
-											 }
-											 recordData.push(json_object);
-										 }
-									 }
+						    					   if (record["http://purl.org/dc/elements/1.1/date-begin"] ||
+						    							   record["http://purl.org/dc/elements/1.1/date-end"]) {				
+						    						   var json_object = {
+						    								   name : record["http://purl.org/dc/elements/1.1/title"][0].value,
+						    								   uri : recordID};
+						    						   if (record["http://purl.org/dc/elements/1.1/date-begin"]) {
+						    							   json_object["startDate"] = record["http://purl.org/dc/elements/1.1/date-begin"][0].value;
+						    						   }
+						    						   if (record["http://purl.org/dc/elements/1.1/date-end"]) {
+						    							   json_object["endDate"] = record["http://purl.org/dc/elements/1.1/date-end"][0].value;
+						    						   }
+						    						   recordData.push(json_object);
+						    					   }
+						    				   }
 	
-									 if (recordData.length > 0) {
-										 var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
+						    				   if (recordData.length > 0) {
+						    					   var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
 	
-										 for (var i = 0; i < recordData.length; i++) {
-											 var rec = recordData[i];
-											 var start_date_str = null;
-											 var end_date_str = null;
+						    					   for (var i = 0; i < recordData.length; i++) {
+						    						   var rec = recordData[i];
+						    						   var start_date_str = null;
+						    						   var end_date_str = null;
 																					 
-											 if (rec.startDate) {
-												 var start_date = new Date(rec.startDate);
-												 var start_day = start_date.getDate();
-												 if (start_day < 10) {
-													 start_day = "0" + start_day;
-												 }
-												 var start_month = start_date.getMonth() + 1;
-												 if (start_month < 10) {
-													 start_month = "0" + start_month;
-												 }
-												 var start_year = start_date.getFullYear();
+						    						   if (rec.startDate) {
+						    							   var start_date = new Date(rec.startDate);
+						    							   var start_day = start_date.getDate();
+						    							   if (start_day < 10) {
+						    								   start_day = "0" + start_day;
+						    							   }
+						    							   var start_month = start_date.getMonth() + 1;
+						    							   if (start_month < 10) {
+						    								   start_month = "0" + start_month;
+						    							   }
+						    							   var start_year = start_date.getFullYear();
 												 
-												 start_date_str = start_year + "," + start_month + "," + start_day;
-											 }
+						    							   start_date_str = start_year + "," + start_month + "," + start_day;
+						    						   }
 											 
-											 if (rec.endDate) {
-												 var end_date = new Date(rec.endDate);
-												 var end_day = end_date.getDate();
-												 if (end_day < 10) {
-													 end_day = "0" + end_day;
-												 }
-												 var end_month = end_date.getMonth() + 1;
-												 if (end_month < 10) {
-													 end_month = "0" + end_month;
-												 }
-												 var end_year = end_date.getFullYear();
+						    						   if (rec.endDate) {
+						    							   var end_date = new Date(rec.endDate);
+						    							   var end_day = end_date.getDate();
+						    							   if (end_day < 10) {
+						    								   end_day = "0" + end_day;
+						    							   }
+						    							   var end_month = end_date.getMonth() + 1;
+						    							   if (end_month < 10) {
+						    								   end_month = "0" + end_month;
+						    							   }
+						    							   var end_year = end_date.getFullYear();
 												 
-												 end_date_str = end_year + "," + end_month + "," + end_day;
-											 }
+						    							   end_date_str = end_year + "," + end_month + "," + end_day;
+						    						   }
 											 
-											 dataRec += '{"startDate":"' + start_date_str + '",';
-											 if (end_date_str) {
-												 dataRec += '"endDate":"' + end_date_str + '",';
-											 }
-											 dataRec += '"headline":"' + rec.name + '",'
-											 dataRec += '"text":"' + rec.uri + '",';
-											 dataRec += '"asset":{"media":"' + rec.uri + '"}}';
+						    						   dataRec += '{"startDate":"' + start_date_str + '",';
+						    						   if (end_date_str) {
+						    							   dataRec += '"endDate":"' + end_date_str + '",';
+						    						   }
+						    						   dataRec += '"headline":"' + rec.name + '",'
+						    						   dataRec += '"text":"' + rec.uri + '",';
+						    						   dataRec += '"asset":{"media":"' + rec.uri + '"}}';
 											 
-											 if (i < (recordData.length - 1)) {
-												 dataRec += ',';
-											 }
-										 }
-										 dataRec += ']}}';
+						    						   if (i < (recordData.length - 1)) {
+						    							   dataRec += ',';
+						    						   }
+						    					   }
+						    					   dataRec += ']}}';
 										 
-										 $("#timeline-frame")[0].onload = function() {
-											 $("#timeline-frame")[0].contentWindow
-										 		.postMessage(dataRec, '*');
-										 }
-										 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
-									 }
-								 }
-								 reader.readAsText(result.target.files[0]);
-					        }
-							$('#myInput').click();
-	                    }
-	                }),
+						    					   $("#timeline-frame")[0].onload = function() {
+						    						   $("#timeline-frame")[0].contentWindow
+						    						   		.postMessage(dataRec, '*');
+						    					   }
+						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+						    				   }
+						    			   }
+						    			   reader.readAsText(result.target.files[0]);
+						    		   }
+						    		   $('#myInput').click();
+						    	   }
+						       }
+						    )
+						]
+					},
 					new Ext.Action({
 	                    text: 'Import From JSON',
 	                    handler: function(){
