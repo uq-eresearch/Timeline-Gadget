@@ -35,13 +35,16 @@ Ext.onReady(function(){
 
         tbar: [
             {
-                text: 'Import Menu',
+            	xtype: 'tbspacer'
+            },
+            {
+                text: 'Import',
                 menu: [
 					{
 						text: 'Import from LORE',
 						menu: [
 						       new Ext.Action({
-						    	   text: 'Import RDF/XML',
+						    	   text: 'RDF/XML',
 						    	   handler: function(){
 						    		   $('#myInput')[0].onchange = function(result) {													 
 						    			   var reader = new FileReader();
@@ -148,7 +151,7 @@ Ext.onReady(function(){
 						    	   }
 						       }), 
 						       new Ext.Action({
-						    	   text: 'Import JSON',
+						    	   text: 'JSON',
 						    	   handler: function(){
 						    		   $('#myInput')[0].onchange = function(result) {													 
 						    			   var reader = new FileReader();
@@ -259,7 +262,25 @@ Ext.onReady(function(){
 	                    }
                     })
                 ]
-            }
+            },
+            {
+                xtype: 'tbseparator'
+            },
+            {
+        		xtype: 'textfield',
+        		fieldLabel: 'searchTerm',
+        		id: 'HUNISearchTerm',
+        		cls: 'round'
+            },
+            {
+            	xtype: 'tbspacer'
+            },
+            new Ext.Action({
+                text: 'Search HuNI',
+                handler: function(){
+                    searchHUNI($("#HUNISearchTerm")[0].value);
+                }
+            })
         ],
         listeners : {
         	afterrender : function(c) {
