@@ -28,7 +28,7 @@ var NAMESPACES = {
     "skos"		: "http://www.w3.org/2004/02/skos/core#"
 };
 
-Ext.onReady(function(){
+Ext.onReady(function(){	
     var panel = new Ext.Panel({
         width:800,
         height:595,
@@ -266,7 +266,7 @@ Ext.onReady(function(){
             {
                 xtype: 'tbseparator'
             },
-            {
+            /*{
         		xtype: 'textfield',
         		fieldLabel: 'searchTerm',
         		id: 'HUNISearchTerm',
@@ -274,11 +274,20 @@ Ext.onReady(function(){
             },
             {
             	xtype: 'tbspacer'
-            },
+            },*/
             new Ext.Action({
                 text: 'Search HuNI',
                 handler: function(){
-                    searchHUNI($("#HUNISearchTerm")[0].value);
+                	Ext.MessageBox.prompt(
+	        			'Search HuNI', 
+	        			'Please enter your search terms',
+	        			function(btn, text){
+	                	    if (btn == 'ok'){
+	                	        searchHUNI(text);
+	                	    }
+	        			}
+	        		);
+                	//searchHUNI($("#HUNISearchTerm")[0].value);
                 }
             })
         ],
