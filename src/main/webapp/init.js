@@ -33,7 +33,12 @@ Ext.onReady(function(){
         width:744,
         height:595,
 
-        tbar: [
+        tbar: new Ext.ux.StatusBar({
+            defaultText: '',
+            id: 'statusBar',
+            statusAlign: 'right', 
+        	items:        	
+        	[
             {
             	xtype: 'tbspacer'
             },
@@ -143,6 +148,7 @@ Ext.onReady(function(){
 						    						   		.postMessage(dataRec, '*');
 						    					   }
 						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+							                	   Ext.getCmp("statusBar").setStatus("");
 						    				   }
 						    			   }
 						    			   reader.readAsText(result.target.files[0]);
@@ -234,6 +240,7 @@ Ext.onReady(function(){
 						    						   		.postMessage(dataRec, '*');
 						    					   }
 						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+							                	   Ext.getCmp("statusBar").setStatus("");
 						    				   }
 						    			   }
 						    			   reader.readAsText(result.target.files[0]);
@@ -255,6 +262,7 @@ Ext.onReady(function(){
 									 		.postMessage(e.target.result, '*');
 									 }
 									 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+			                	     Ext.getCmp("statusBar").setStatus("");
 								 }
 								 reader.readAsText(result.target.files[0]);
 					        }
@@ -284,22 +292,23 @@ Ext.onReady(function(){
 	        			function(btn, text){
 	                	    if (btn == 'ok'){
 	                	        searchHUNI(text);
+	                	        Ext.getCmp("statusBar").setStatus("\"" + text + "\"");
 	                	    }
 	        			}
 	        		);
                 	//searchHUNI($("#HUNISearchTerm")[0].value);
                 }
             })
-        ],
+        ]}),
         listeners : {
         	afterrender : function(c) {
-        		$.getJSON("http://localhost:8080/timeline/data.json", function(data) {
+        		/*$.getJSON("http://localhost:8080/timeline/data.json", function(data) {
             		$("#timeline-frame")[0].onload = function() {
             			$("#timeline-frame")[0].contentWindow
     						.postMessage(JSON.stringify(data), '*');
     				}
     				$("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
-        		});
+        		});*/
         	}
         },
         html : "<iframe id='timeline-frame' src='http://localhost:8080/timeline/timeline.html' " +

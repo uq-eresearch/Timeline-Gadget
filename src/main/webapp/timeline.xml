@@ -10,6 +10,8 @@
      <script type="text/javascript" src="./lib/ext3.2/adapter/jquery/ext-jquery-adapter-debug.js"></script>
      <script type="text/javascript" src="./lib/ext3.2/ext-all.js"></script>
      	      	 
+     <script type="text/javascript" src="./lib/StatusBar.js"></script>
+     	      	 
      <script type="text/javascript" src="./Search.js"></script>
      <script type="text/javascript" src="./init.js"></script>
      
