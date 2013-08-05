@@ -2,7 +2,7 @@
 <Module>
 
   <ModulePrefs author="Simon McNaughton" author_email="simon.mcnaughton@uqconnect.edu.au"
-    description="LORE-Timeline" title="LORE-Timeline"  height="600" width= "800"/>
+    description="LORE-Timeline" title="LORE-Timeline"  height="600" width= "744"/>
 
   <Content type="html" view="home, profile, preview"><![CDATA[	
      <script type="text/javascript" src="./lib/jquery-1.7.2.min.js"></script>

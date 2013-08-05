@@ -30,7 +30,7 @@ var NAMESPACES = {
 
 Ext.onReady(function(){	
     var panel = new Ext.Panel({
-        width:800,
+        width:744,
         height:595,
 
         tbar: [
@@ -303,7 +303,7 @@ Ext.onReady(function(){
         	}
         },
         html : "<iframe id='timeline-frame' src='http://localhost:8080/timeline/timeline.html' " +
-        		"style='width: 794px; height: 562px;'></div>",
+        		"style='width: 738px; height: 562px;'></div>",
         renderTo: Ext.get("timelinearea")
     });
 });
