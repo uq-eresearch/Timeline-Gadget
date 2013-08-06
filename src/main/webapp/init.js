@@ -274,9 +274,11 @@ Ext.onReady(function(){
                     }),
 					new Ext.Action({
 					    text: 'Export JSON',
-					    handler: function(){                			
-                			var blob = new Blob([timelineData], {type: "text/plain;charset=utf-8"});
-            	        	saveAs(blob, "TimelineData.txt");
+					    handler: function(){              
+					    	if (timelineData != null) {
+					    		var blob = new Blob([timelineData], {type: "text/plain;charset=utf-8"});
+            	        		saveAs(blob, "TimelineData.txt");
+					    	}
 					    }
 					})
                 ]
