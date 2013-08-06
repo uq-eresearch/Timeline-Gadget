@@ -58,7 +58,7 @@ function searchHUNI(matchval) {
     	}
     	
     	if (recordData.length > 0) {
-			   var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
+			   var dataRec = '{"timeline":{"type":"default","date": [';
 
 			   for (var i = 0; i < recordData.length; i++) {
 				   var rec = recordData[i];
@@ -115,6 +115,7 @@ function searchHUNI(matchval) {
 				   		.postMessage(dataRec, '*');
 			   }
 			   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
+        	   timelineData = dataRec;
 		   }
     }, params);
 }

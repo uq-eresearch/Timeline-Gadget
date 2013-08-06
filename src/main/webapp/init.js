@@ -1,4 +1,4 @@
-var oThis = this;
+var timelineData = null;
 
 var NAMESPACES = {
     "dc"      	: "http://purl.org/dc/elements/1.1/",
@@ -43,7 +43,7 @@ Ext.onReady(function(){
             	xtype: 'tbspacer'
             },
             {
-                text: 'Import',
+                text: 'Import/Export ',
                 menu: [
 					{
 						text: 'Import from LORE',
@@ -91,7 +91,7 @@ Ext.onReady(function(){
 						    				   }
 							         
 						    				   if (recordData.length > 0) {
-						    					   var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
+						    					   var dataRec = '{"timeline":{"type":"default","date": [';
 
 						    					   for (var i = 0; i < recordData.length; i++) {
 						    						   var rec = recordData[i];
@@ -149,6 +149,7 @@ Ext.onReady(function(){
 						    					   }
 						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
 							                	   Ext.getCmp("statusBar").setStatus("");
+							                	   timelineData = dataRec;
 						    				   }
 						    			   }
 						    			   reader.readAsText(result.target.files[0]);
@@ -184,7 +185,7 @@ Ext.onReady(function(){
 						    				   }
 	
 						    				   if (recordData.length > 0) {
-						    					   var dataRec = '{"timeline":{"headline":"Timeline of Events for X","type":"default","date": [';
+						    					   var dataRec = '{"timeline":{"type":"default","date": [';
 	
 						    					   for (var i = 0; i < recordData.length; i++) {
 						    						   var rec = recordData[i];
@@ -241,6 +242,7 @@ Ext.onReady(function(){
 						    					   }
 						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
 							                	   Ext.getCmp("statusBar").setStatus("");
+							                	   timelineData = dataRec;
 						    				   }
 						    			   }
 						    			   reader.readAsText(result.target.files[0]);
@@ -263,12 +265,20 @@ Ext.onReady(function(){
 									 }
 									 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
 			                	     Ext.getCmp("statusBar").setStatus("");
+			                	     timelineData = e.target.result;
 								 }
 								 reader.readAsText(result.target.files[0]);
 					        }
 							$('#myInput').click();
 	                    }
-                    })
+                    }),
+					new Ext.Action({
+					    text: 'Export JSON',
+					    handler: function(){                			
+                			var blob = new Blob([timelineData], {type: "text/plain;charset=utf-8"});
+            	        	saveAs(blob, "TimelineData.txt");
+					    }
+					})
                 ]
             },
             {
