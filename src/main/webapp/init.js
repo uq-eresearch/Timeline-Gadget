@@ -148,7 +148,7 @@ Ext.onReady(function(){
 						    						   		.postMessage(dataRec, '*');
 						    					   }
 						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
-							                	   Ext.getCmp("statusBar").setStatus("");
+							                	   Ext.getCmp("statusBar").setStatus(" ");
 							                	   timelineData = dataRec;
 						    				   }
 						    			   }
@@ -241,7 +241,7 @@ Ext.onReady(function(){
 						    						   		.postMessage(dataRec, '*');
 						    					   }
 						    					   $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
-							                	   Ext.getCmp("statusBar").setStatus("");
+							                	   Ext.getCmp("statusBar").setStatus(" ");
 							                	   timelineData = dataRec;
 						    				   }
 						    			   }
@@ -264,7 +264,7 @@ Ext.onReady(function(){
 									 		.postMessage(e.target.result, '*');
 									 }
 									 $("#timeline-frame")[0].src = $("#timeline-frame")[0].src;
-			                	     Ext.getCmp("statusBar").setStatus("");
+			                	     Ext.getCmp("statusBar").setStatus(" ");
 			                	     timelineData = e.target.result;
 								 }
 								 reader.readAsText(result.target.files[0]);
@@ -286,15 +286,6 @@ Ext.onReady(function(){
             {
                 xtype: 'tbseparator'
             },
-            /*{
-        		xtype: 'textfield',
-        		fieldLabel: 'searchTerm',
-        		id: 'HUNISearchTerm',
-        		cls: 'round'
-            },
-            {
-            	xtype: 'tbspacer'
-            },*/
             new Ext.Action({
                 text: 'Search HuNI',
                 handler: function(){
@@ -308,7 +299,6 @@ Ext.onReady(function(){
 	                	    }
 	        			}
 	        		);
-                	//searchHUNI($("#HUNISearchTerm")[0].value);
                 }
             })
         ]}),
